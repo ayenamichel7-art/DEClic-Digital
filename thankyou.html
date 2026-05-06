@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merci pour votre inscription | DEClic Digital</title>
+    <meta name="description" content="Confirmation de votre paiement pour la conférence DEClic Digital. Retrouvez votre billet et les informations pratiques.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {display:flex;justify-content:center;align-items:center;min-height:100vh;background:linear-gradient(135deg, #00003e, #ab1662);color:#fff;font-family:'Montserrat',sans-serif;}
+        .card{background:rgba(255,255,255,0.1);padding:2rem;border-radius:1rem;backdrop-filter:blur(10px);text-align:center;max-width:500px;}
+        .card h1{font-size:2.5rem;margin-bottom:0.5rem;}
+        .card p{margin:0.5rem 0;}
+        .cta{display:inline-block;margin-top:1.5rem;padding:0.75rem 1.5rem;background:#ab1662;color:#fff;border-radius:0.5rem;text-decoration:none;transition:transform 0.2s;}
+        .cta:hover{transform:scale(1.05);}
+    </style>
+</head>
+<body>
+    <div class="card" id="main-card">
+        <h1 id="status-title">⏳ Vérification...</h1>
+        <p id="status-text">Nous vérifions votre paiement, veuillez patienter quelques secondes.</p>
+        <div id="details-container" style="display:none;">
+            <p>Merci d'avoir acheté votre ticket pour la conférence <strong>DEClic Digital</strong> !</p>
+            <p id="details"></p>
+            <div id="qr-container" style="margin-top:1.5rem; text-align:center;">
+                <p>Votre QR‑code de billet :</p>
+                <canvas id="qr"></canvas>
+                <p id="ticket-id-display" style="font-weight: bold; margin-top: 0.5rem;"></p>
+            </div>
+        </div>
+        <a href="index.html" class="cta">Retour à la page d'accueil</a>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const fedaId = params.get('id');
+        let attempts = 0;
+        const maxAttempts = 10;
+
+        async function verifyTicket() {
+            if (!fedaId) {
+                document.getElementById('status-title').textContent = "❌ Erreur";
+                document.getElementById('status-text').textContent = "ID de transaction manquant.";
+                return;
+            }
+
+            try {
+                const resp = await fetch(`/tickets/verify/${fedaId}`);
+                if (resp.ok) {
+                    const ticket = await resp.json();
+                    showSuccess(ticket);
+                } else {
+                    if (attempts < maxAttempts) {
+                        attempts++;
+                        setTimeout(verifyTicket, 2000); // Réessayer toutes les 2 secondes
+                    } else {
+                        document.getElementById('status-title').textContent = "⚠️ Confirmation en attente";
+                        document.getElementById('status-text').textContent = "Le paiement est confirmé par FedaPay, mais notre système met un peu de temps à le traiter. Vous recevrez un email de confirmation d'ici quelques minutes.";
+                    }
+                }
+            } catch (e) {
+                console.error(e);
+                if (attempts < maxAttempts) {
+                    attempts++;
+                    setTimeout(verifyTicket, 2000);
+                }
+            }
+        }
+
+        function showSuccess(ticket) {
+            document.getElementById('status-title').textContent = "✅ Paiement confirmé";
+            document.getElementById('status-text').style.display = "none";
+            document.getElementById('details-container').style.display = "block";
+            document.getElementById('details').textContent = `Pack : ${ticket.product} | Montant : ${Number(ticket.amount).toLocaleString('fr-FR')} FCFA`;
+            document.getElementById('ticket-id-display').textContent = `ID du ticket : ${ticket.id}`;
+
+            new QRious({
+                element: document.getElementById('qr'),
+                size: 200,
+                value: `ID:${ticket.id}|FedaID:${ticket.feda_id}|Prod:${ticket.product}`
+            });
+        }
+
+        verifyTicket();
+    </script>
+</body>
+</html>

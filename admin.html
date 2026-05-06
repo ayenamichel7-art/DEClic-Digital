@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administration – Tickets DEClic Digital</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .admin-table { width: 100%; border-collapse: collapse; margin-top: 2rem; }
+        .admin-table th, .admin-table td { padding: 0.75rem; border: 1px solid rgba(255,255,255,0.2); color:#fff; }
+        .admin-table th { background: rgba(0,0,0,0.3); }
+        .admin-table tr:nth-child(even) { background: rgba(255,255,255,0.05); }
+        .admin-header { text-align:center; margin-top:2rem; }
+    </style>
+</head>
+<body>
+    <header class="hero">
+        <h1 class="title1">🛠️ Administration &nbsp;–&nbsp; Tickets</h1>
+        <a href="index.html" class="cta-button">← Retour à la page d'accueil</a>
+    </header>
+
+    <section>
+        <div id="kpi-container" style="display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap; justify-content: center;">
+            <div class="info-card" style="min-width: 200px;">
+                <h3>Total Ventes</h3>
+                <p id="totalCount" style="font-size: 2rem; font-weight: bold;">0</p>
+            </div>
+            <div class="info-card" style="min-width: 200px;">
+                <h3>Chiffre d'Affaires</h3>
+                <p id="totalAmount" style="font-size: 2rem; font-weight: bold; color: #ab1662;">0 FCFA</p>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-bottom: 2rem; display: flex; gap: 1rem; justify-content: center;">
+            <a href="/tickets/export" class="cta-button" style="background: #007bff;">📥 Exporter CSV</a>
+        </div>
+
+        <h2 class="section-heading admin-header">Liste des tickets enregistrés</h2>
+        <table class="admin-table" id="ticketsTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Produit</th>
+                    <th>Montant (FCFA)</th>
+                    <th>Nom</th>
+                    <th>Email</th>
+                    <th>Téléphone</th>
+                    <th>Date / Heure</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td colspan="7" style="text-align:center;">Chargement des tickets…</td></tr>
+            </tbody>
+        </table>
+    </section>
+
+    <script>
+        async function loadTickets() {
+            try {
+                const resp = await fetch('/tickets');
+                if (!resp.ok) throw new Error('Erreur serveur');
+                const data = await resp.json();
+                const { stats, tickets } = data;
+
+                // Update KPIs
+                document.getElementById('totalCount').textContent = stats.total_count;
+                document.getElementById('totalAmount').textContent = `${Number(stats.total_amount).toLocaleString('fr-FR')} FCFA`;
+
+                const tbody = document.getElementById('ticketsTable').querySelector('tbody');
+                tbody.innerHTML = '';
+                
+                if (tickets.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">Aucun ticket enregistré.</td></tr>';
+                    return;
+                }
+                
+                tickets.forEach(t => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${t.id || '—'}</td>
+                        <td>${t.product}</td>
+                        <td>${Number(t.amount).toLocaleString('fr-FR')}</td>
+                        <td>${t.name || '—'}</td>
+                        <td>${t.email || '—'}</td>
+                        <td>${t.phone || '—'}</td>
+                        <td>${new Date(t.timestamp).toLocaleString('fr-FR')}</td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+
+            } catch (e) {
+                console.error(e);
+                const tbody = document.getElementById('ticketsTable').querySelector('tbody');
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:#ff6;">Impossible de charger les tickets.</td></tr>';
+            }
+        }
+
+        loadTickets();
+    </script>
+</body>
+</html>

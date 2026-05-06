@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "rewrites": [
+    { "source": "/fedapay-webhook", "destination": "/api/webhook" },
+    { "source": "/tickets/verify/:id", "destination": "/api/verify?id=:id" },
+    { "source": "/tickets/export", "destination": "/api/export" },
+    { "source": "/tickets", "destination": "/api/tickets" }
+  ],
+  "cleanUrls": true
+}

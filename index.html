@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEClic Digital 2026 – La Conférence Marketing & Business</title>
+    <meta name="description" content="Découvrez les secrets de la vente en ligne efficace à Cotonou. Marketing digital, Finance et Développement personnel.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="hero">
+        <img src="declic logo.jpeg" alt="Logo DEClic Digital" class="logo">
+        <h1 class="title1">Vendre efficacement <br>sur Internet ?</h1>
+        <p class="tagline">Le rendez-vous incontournable des entrepreneurs à Cotonou pour faire exploser vos ventes en 2026.</p>
+        <a href="#packages" class="cta-button">Réserver mon ticket</a>
+    </header>
+
+    <section class="details">
+        <div class="info-card glass-card">
+            <h2>📅 Date & Heure</h2>
+            <p>Samedi 20 Juin 2026</p>
+            <p>À partir de 09h00</p>
+        </div>
+        <div class="info-card glass-card">
+            <h2>📍 Lieu Prestige</h2>
+            <p>Dream Center, Cotonou</p>
+            <p>Quartier Jéricho</p>
+        </div>
+        <div class="info-card glass-card">
+            <h2>🎯 Objectif</h2>
+            <p>Maîtriser les outils digitaux</p>
+            <p>Networking & Opportunités</p>
+        </div>
+    </section>
+
+    <section class="speakers" id="speakers">
+        <h2 class="section-heading">🎙️ Experts & Speakers</h2>
+        <div class="speaker-grid">
+            <div class="speaker-card">
+                <img src="mons.jpeg" alt="M. Gédéon SEWAI" class="speaker-photo">
+                <h3>M. Gédéon SEWAI</h3>
+                <p>Coach Marketing Digital</p>
+            </div>
+            <div class="speaker-card">
+                <img src="mons.jpeg" alt="M. Gildas AMOUSSOU" class="speaker-photo">
+                <h3>M. Gildas AMOUSSOU</h3>
+                <p>Coach Développement Personnel</p>
+            </div>
+            <div class="speaker-card">
+                <img src="mons.jpeg" alt="M. Josué AKOWANOU" class="speaker-photo">
+                <h3>M. Josué AKOWANOU</h3>
+                <p>Dr Coach en Finance</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="packages" id="packages">
+        <h2 class="section-heading">🎫 Choisissez votre Pass</h2>
+        <div class="package-grid">
+            <div class="package-card glass-card">
+                <h3>Pack Simple</h3>
+                <p class="price">3 000</p>
+                <ul>
+                    <li>✅ Accès Salle</li>
+                    <li>✅ Formation Live</li>
+                </ul>
+                <button class="cta-button" onclick="openCheckout('Simple', 3000)">Choisir ce pack</button>
+            </div>
+            <div class="package-card glass-card featured">
+                <h3>Pack Standard</h3>
+                <p class="price">5 000</p>
+                <ul>
+                    <li>✅ Pass + Consultations</li>
+                    <li>✅ 4 contenus Formation</li>
+                    <li>✅ Wi‑Fi VIP</li>
+                </ul>
+                <button class="cta-button" onclick="openCheckout('Standard', 5000)">Choisir ce pack</button>
+            </div>
+            <div class="package-card glass-card">
+                <h3>Pack Premium</h3>
+                <p class="price">25 000</p>
+                <ul>
+                    <li>✅ Pack Standard</li>
+                    <li>✅ 8 contenus supplémentaires</li>
+                    <li>✅ Mentorat post-conférence</li>
+                </ul>
+                <button class="cta-button" onclick="openCheckout('Premium', 25000)">Choisir ce pack</button>
+            </div>
+            <div class="package-card glass-card">
+                <h3>Pack VIP</h3>
+                <p class="price">50 000</p>
+                <ul>
+                    <li>✅ Pack Premium</li>
+                    <li>✅ 18 contenus Bonus</li>
+                    <li>✅ Dîner Networking privé</li>
+                </ul>
+                <button class="cta-button" onclick="openCheckout('VIP', 50000)">Choisir ce pack</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pre-payment Modal -->
+    <div id="checkoutModal" class="modal">
+        <div class="modal-content">
+            <h2>Finalisez votre inscription</h2>
+            <p id="modalPackageName" style="color: var(--color-accent); font-weight: bold; margin-bottom: 1rem;"></p>
+            <form id="checkoutForm">
+                <div class="form-group">
+                    <label for="fullName">Nom complet</label>
+                    <input type="text" id="fullName" placeholder="Ex: Jean Dupont" required>
+                </div>
+                <div class="form-group">
+                    <label for="userEmail">Email</label>
+                    <input type="email" id="userEmail" placeholder="votre@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="userPhone">Téléphone (WhatsApp)</label>
+                    <input type="tel" id="userPhone" placeholder="+229 01 00 00 00" required>
+                </div>
+                <button type="submit" class="cta-button" style="width: 100%;">Aller au paiement</button>
+                <button type="button" onclick="closeModal()" style="background:transparent; border:none; color:white; margin-top:1rem; cursor:pointer; opacity:0.6;">Annuler</button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>© 2026 DEClic Digital. Tous droits réservés.</p>
+        <p>📱 (+229) 01 52 29 26 30 | (+229) 01 52 29 26 28</p>
+    </footer>
+
+    <script>
+        let selectedProduct = '';
+        let selectedAmount = 0;
+
+        function openCheckout(product, amount) {
+            selectedProduct = product;
+            selectedAmount = amount;
+            document.getElementById('modalPackageName').textContent = `Forfait : ${product} (${amount.toLocaleString()} FCFA)`;
+            document.getElementById('checkoutModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('checkoutModal').style.display = 'none';
+        }
+
+        document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('fullName').value;
+            const email = document.getElementById('userEmail').value;
+            const phone = document.getElementById('userPhone').value;
+
+            // Construction de l'URL FedaPay avec metadata et infos client
+            const baseUrl = 'https://checkout.fedapay.com/pay';
+            const params = new URLSearchParams({
+                amount: selectedAmount,
+                currency: 'FCFA',
+                'customer[email]': email,
+                'customer[firstname]': name,
+                'customer[lastname]': 'Digital', // Placeholder
+                'customer[phone_number][number]': phone.replace(/\s/g, ''),
+                'customer[phone_number][country]': 'BJ',
+                'metadata[product]': selectedProduct,
+                'metadata[phone]': phone,
+                'successUrl': `${window.location.origin}/thankyou.html`
+            });
+
+            window.location.href = `${baseUrl}?${params.toString()}`;
+        });
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('checkoutModal')) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>
