@@ -19,6 +19,11 @@
     "globals": "^17.6.0",
     "husky": "^9.1.7",
     "supabase": "^2.98.2",
-    "vercel": "^50.41.0"
+    "vercel": "^53.1.1"
+  },
+  "overrides": {
+    "minimatch": "^9.0.3",
+    "undici": "^6.13.0",
+    "path-to-regexp": "^0.1.10"
   }
 }
