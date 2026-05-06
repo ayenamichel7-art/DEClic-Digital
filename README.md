@@ -60,5 +60,8 @@ npm run dev
 - Authentification Basic Auth pour l'interface administrative.
 - Politiques Row Level Security (RLS) sur Supabase.
 
+## 📄 Licence
+Ce projet est sous licence **Propriétaire - Tous Droits Réservés**. Toute reproduction, modification ou distribution commerciale est strictement interdite sans autorisation préalable. Voir le fichier [LICENSE](LICENSE) pour plus de détails.
+
 ---
 © 2026 DEClic Digital. Développé pour la réussite des entrepreneurs.
