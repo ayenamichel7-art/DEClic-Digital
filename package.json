@@ -4,6 +4,8 @@
   "description": "Plateforme de gestion de tickets pour la conférence Declic Digital",
   "scripts": {
     "dev": "vercel dev",
+    "build:css": "tailwindcss -i ./style.css -o ./dist/output.css",
+    "watch:css": "tailwindcss -i ./style.css -o ./dist/output.css --watch",
     "lint": "eslint . --fix",
     "prepare": "husky"
   },
@@ -15,10 +17,14 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "autoprefixer": "^10.5.0",
+    "daisyui": "^5.5.19",
     "eslint": "^10.3.0",
     "globals": "^17.6.0",
     "husky": "^9.1.7",
+    "postcss": "^8.5.14",
     "supabase": "^2.98.2",
+    "tailwindcss": "^4.2.4",
     "vercel": "^53.1.1"
   },
   "overrides": {
