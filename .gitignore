@@ -24,3 +24,6 @@ Thumbs.db
 
 # Database
 tickets.json
+
+# Supabase
+supabase/.temp/
