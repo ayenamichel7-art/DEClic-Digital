@@ -42,7 +42,13 @@ SMTP_PASS=votre-mot-de-passe
 EMAIL_FROM="DEClic Digital" <no-reply@votre-domaine.com>
 ```
 
-### 4. Lancement en local
+### 4. Configuration GitHub Actions (CD)
+Pour que le déploiement automatique fonctionne, ajoutez les secrets suivants dans votre dépôt GitHub (**Settings > Secrets and variables > Actions**) :
+- `VERCEL_TOKEN` : Votre jeton d'accès Vercel (disponible dans votre compte Vercel sous *Tokens*).
+- `VERCEL_ORG_ID` : L'ID de votre organisation (trouvé dans `.vercel/project.json` après un `vercel link`).
+- `VERCEL_PROJECT_ID` : L'ID de votre projet (trouvé dans `.vercel/project.json` après un `vercel link`).
+
+### 5. Lancement en local
 ```bash
 npm install
 npm run dev
