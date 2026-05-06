@@ -8,10 +8,10 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.43.1",
+    "@supabase/supabase-js": "^2.105.3",
     "basic-auth": "^2.0.1",
     "dotenv": "^16.4.5",
-    "nodemailer": "^6.9.13"
+    "nodemailer": "^8.0.7"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
@@ -19,6 +19,6 @@
     "globals": "^17.6.0",
     "husky": "^9.1.7",
     "supabase": "^2.98.2",
-    "vercel": "^34.2.0"
+    "vercel": "^50.41.0"
   }
 }
