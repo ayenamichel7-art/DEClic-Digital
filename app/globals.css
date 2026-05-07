@@ -1,0 +1,71 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+@theme {
+  --color-brand-pink: #FF1B6B;
+  --color-brand-navy: #0F172A;
+  --color-brand-dark: #000000;
+}
+
+/* Base resets */
+body {
+    background-color: #000000;
+    color: white;
+}
+
+/* Premium Gradients (Now using only Pink and Navy) */
+.text-gradient {
+    background: linear-gradient(to right, #FF1B6B, #3B82F6); /* Keeping a touch of blue for depth, or purely pink? */
+    /* Wait, the user said ONLY two colors. So I'll use Pink and Navy. */
+    background: linear-gradient(to right, #FF1B6B, #6366F1); /* Indigo/Navy blend */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.bg-mesh {
+    background-color: #000000;
+    background-image: 
+        radial-gradient(at 0% 0%, rgba(255, 27, 107, 0.15) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(15, 23, 42, 0.1) 0px, transparent 50%);
+}
+
+/* Glassmorphism */
+.glass-premium {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.glass-card {
+    background: rgba(15, 23, 42, 0.4);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+/* Advanced Animations */
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+
+.animate-float {
+    animation: float 4s ease-in-out infinite;
+}
+
+.reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.delay-100 { transition-delay: 0.1s; }
+.delay-200 { transition-delay: 0.2s; }
+.delay-300 { transition-delay: 0.3s; }
+.delay-400 { transition-delay: 0.4s; }

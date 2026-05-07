@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./*.html", "./api/**/*.js", "./lib/**/*.js"],
+  content: ['./*.html', './api/**/*.js', './lib/**/*.js'],
   theme: {
     extend: {
       colors: {
@@ -11,24 +11,24 @@ module.exports = {
       },
     },
   },
-  plugins: [require("daisyui")],
+  plugins: [require('daisyui')],
   daisyui: {
     themes: [
       {
         declic: {
-          "primary": "#E91E63",
-          "secondary": "#0D1117",
-          "accent": "#F06292",
-          "neutral": "#1f2937",
-          "base-100": "#ffffff",
-          "info": "#3abff8",
-          "success": "#36d399",
-          "warning": "#fbbd23",
-          "error": "#f87272",
+          'primary': '#E91E63',
+          'secondary': '#0D1117',
+          'accent': '#F06292',
+          'neutral': '#1f2937',
+          'base-100': '#ffffff',
+          'info': '#3abff8',
+          'success': '#36d399',
+          'warning': '#fbbd23',
+          'error': '#f87272',
         },
       },
-      "light",
-      "dark",
+      'light',
+      'dark',
     ],
   },
-}
+};

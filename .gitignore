@@ -27,3 +27,4 @@ tickets.json
 
 # Supabase
 supabase/.temp/
+.env*.local
