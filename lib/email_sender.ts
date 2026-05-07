@@ -1,5 +1,14 @@
 import nodemailer from 'nodemailer';
 
+function escapeHtml(unsafe: string) {
+  return unsafe
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
 /**
  * Envoie un email de confirmation de ticket.
  * @param to Email du destinataire
@@ -31,8 +40,8 @@ export async function sendConfirmation(to: string, ticketId: string, product: st
           <h2 style="color: #0D1117;">Merci pour votre inscription !</h2>
           <p>Votre paiement pour la conférence <strong>DEClic Digital</strong> a été confirmé avec succès.</p>
           <div style="background: #F8F9FA; padding: 20px; border-radius: 12px; border: 1px solid #E91E63; margin: 20px 0;">
-            <p style="margin: 5px 0;"><strong>ID du Ticket :</strong> <span style="color: #E91E63;">${ticketId}</span></p>
-            <p style="margin: 5px 0;"><strong>Pack :</strong> ${product}</p>
+            <p style="margin: 5px 0;"><strong>ID du Ticket :</strong> <span style="color: #E91E63;">${escapeHtml(ticketId)}</span></p>
+            <p style="margin: 5px 0;"><strong>Pack :</strong> ${escapeHtml(product)}</p>
             <p style="margin: 5px 0;"><strong>Montant :</strong> ${Number(amount).toLocaleString('fr-FR')} FCFA</p>
           </div>
           <p>Veuillez conserver cet email. Votre accès sera validé via le QR-code généré lors de votre achat.</p>
