@@ -13,9 +13,9 @@
     "@supabase/ssr": "^0.10.2",
     "@supabase/supabase-js": "^2.105.3",
     "next": "^16.2.5",
-    "nodemailer": "^8.0.7",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
+    "resend": "^6.12.3",
     "typescript": "^5.9.3"
   },
   "devDependencies": {
