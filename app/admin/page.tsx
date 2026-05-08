@@ -24,18 +24,33 @@ interface Stats {
 export default function AdminPage() {
   const [tickets, setTickets] = useState<Ticket[]>([]);
   const [stats, setStats] = useState<Stats | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterProduct, setFilterProduct] = useState('All');
 
+  // Auth state
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [authError, setAuthError] = useState('');
+  const [authLoading, setAuthLoading] = useState(false);
+
+  // Génère le header Basic Auth
+  const getAuthHeaders = () => ({
+    'Authorization': 'Basic ' + btoa(username + ':' + password),
+  });
+
   const fetchDashboardData = async () => {
     setLoading(true);
     try {
-      const response = await fetch('/api/tickets');
+      const response = await fetch('/api/tickets', {
+        headers: getAuthHeaders(),
+      });
       
       if (response.status === 401) {
-        setError("Authentification requise");
+        setIsAuthenticated(false);
+        setError("Session expirée, veuillez vous reconnecter.");
         return;
       }
 
@@ -51,6 +66,36 @@ export default function AdminPage() {
       setError(err.message);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setAuthLoading(true);
+    setAuthError('');
+    
+    try {
+      const response = await fetch('/api/tickets', {
+        headers: {
+          'Authorization': 'Basic ' + btoa(username + ':' + password),
+        },
+      });
+
+      if (response.status === 401) {
+        setAuthError('Identifiants incorrects.');
+        return;
+      }
+
+      if (response.ok) {
+        const data = await response.json();
+        setTickets(data.tickets);
+        setStats(data.stats);
+        setIsAuthenticated(true);
+      }
+    } catch {
+      setAuthError('Erreur de connexion au serveur.');
+    } finally {
+      setAuthLoading(false);
     }
   };
 
@@ -70,13 +115,12 @@ export default function AdminPage() {
   const toggleCheckIn = async (ticketId: string, currentStatus: boolean) => {
     const newStatus = !currentStatus;
     
-    // Optimistic UI update
     setTickets(prev => prev.map(t => t.id === ticketId ? { ...t, checked_in: newStatus } as any : t));
 
     try {
       const response = await fetch('/api/checkin', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...getAuthHeaders() },
         body: JSON.stringify({ ticketId, status: newStatus }),
       });
 
@@ -85,20 +129,83 @@ export default function AdminPage() {
       }
     } catch (err: any) {
       alert(err.message);
-      // Revert UI on failure
       setTickets(prev => prev.map(t => t.id === ticketId ? { ...t, checked_in: currentStatus } as any : t));
     }
   };
 
-  useEffect(() => {
-    fetchDashboardData();
-  }, []);
+  // Ne pas charger automatiquement — l'utilisateur doit se connecter d'abord
 
+  // --- Login Screen ---
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4 font-sans">
+        <div className="bg-white rounded-3xl shadow-2xl border border-gray-100 p-10 w-full max-w-md">
+          <div className="text-center mb-8">
+            <div className="inline-flex items-center gap-3 mb-4">
+              <div className="relative">
+                <div className="absolute inset-0 bg-brand-pink blur-md opacity-20"></div>
+                <img src="/logo.png" alt="Logo" className="h-12 w-12 object-contain relative z-10" />
+              </div>
+              <span className="text-2xl font-bold tracking-tight text-gray-900">DEClic Digital</span>
+            </div>
+            <h1 className="text-xl font-bold text-gray-900 mb-1">Espace Administrateur</h1>
+            <p className="text-sm text-gray-500">Entrez vos identifiants pour accéder au dashboard.</p>
+          </div>
+
+          <form onSubmit={handleLogin} className="space-y-5">
+            <div>
+              <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Nom d&apos;utilisateur</label>
+              <input
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="admin_declic"
+                required
+                className="w-full px-5 py-3 bg-gray-50 border border-gray-200 rounded-2xl text-sm font-medium focus:ring-2 focus:ring-brand-pink/20 focus:border-brand-pink outline-none transition-all"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Mot de passe</label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="••••••••••"
+                required
+                className="w-full px-5 py-3 bg-gray-50 border border-gray-200 rounded-2xl text-sm font-medium focus:ring-2 focus:ring-brand-pink/20 focus:border-brand-pink outline-none transition-all"
+              />
+            </div>
+
+            {authError && (
+              <div className="bg-red-50 border border-red-100 text-red-600 p-3 rounded-2xl text-sm font-medium flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                {authError}
+              </div>
+            )}
+
+            <button
+              type="submit"
+              disabled={authLoading}
+              className="w-full py-4 bg-brand-pink text-white rounded-2xl font-bold text-sm uppercase tracking-widest hover:bg-brand-navy transition-colors shadow-lg shadow-brand-pink/20 disabled:opacity-50"
+            >
+              {authLoading ? 'Connexion...' : 'Se connecter'}
+            </button>
+          </form>
+
+          <div className="text-center mt-6">
+            <Link href="/" className="text-xs text-gray-400 hover:text-brand-pink transition-colors font-medium">
+              ← Retour au site
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // --- Dashboard (après connexion) ---
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4 lg:p-8 font-sans">
       <div className="bg-white rounded-[2rem] shadow-2xl w-full max-w-[1400px] h-[90vh] flex overflow-hidden border border-gray-100">
-        
-        {/* Sidebar */}
         <aside className="w-64 border-r border-gray-100 flex flex-col py-8 px-6 flex-shrink-0 bg-white z-10 hidden lg:flex">
           <div className="flex items-center gap-3 mb-10">
             <div className="relative">
@@ -124,8 +231,9 @@ export default function AdminPage() {
           <div className="mt-auto space-y-4">
             <button 
               onClick={() => {
-                const url = window.location.origin.replace('//', '//logout:logout@');
-                window.location.href = url + '/admin';
+                setIsAuthenticated(false);
+                setUsername('');
+                setPassword('');
               }}
               className="w-full flex items-center gap-3 px-4 py-3 text-red-500 hover:bg-red-50 rounded-2xl font-medium transition-colors"
             >
