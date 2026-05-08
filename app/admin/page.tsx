@@ -16,6 +16,7 @@ interface Ticket {
 
 interface Stats {
   total_count: number;
+  total_checked_in: number;
   total_amount: number;
   by_product: Record<string, number>;
 }
