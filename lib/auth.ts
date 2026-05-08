@@ -34,7 +34,6 @@ export function requireAdminAuth(req: Request): NextResponse | null {
   if (!authHeader || !authHeader.startsWith('Basic ')) {
     return new NextResponse('Access denied', {
       status: 401,
-      headers: { 'WWW-Authenticate': 'Basic realm="Admin Area"' },
     });
   }
 
@@ -46,7 +45,6 @@ export function requireAdminAuth(req: Request): NextResponse | null {
   if (!safeCompare(user, adminUser) || !safeCompare(pass, adminPass)) {
     return new NextResponse('Access denied', {
       status: 401,
-      headers: { 'WWW-Authenticate': 'Basic realm="Admin Area"' },
     });
   }
 
