@@ -280,8 +280,10 @@ export default function AdminPage() {
                 className="px-5 py-2.5 bg-white border border-gray-200 text-gray-700 rounded-full text-sm font-semibold outline-none focus:ring-2 focus:ring-brand-pink/20 shadow-sm"
               >
                 <option value="All">Tous les packs</option>
-                <option value="Standard">Standard</option>
-                <option value="VIP">VIP</option>
+                <option value="Simple">Pack Simple</option>
+                <option value="Standard">Pack Standard</option>
+                <option value="Premium">Pack Premium</option>
+                <option value="VIP">Pack VIP</option>
               </select>
               <a href="/api/export" className="px-5 py-2.5 bg-white border border-gray-200 text-gray-700 rounded-full text-sm font-semibold hover:bg-gray-50 transition-colors shadow-sm flex items-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
@@ -302,7 +304,7 @@ export default function AdminPage() {
           )}
 
           {/* Stats Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6 mb-8">
             <div className="bg-brand-pink rounded-3xl p-6 text-white pink-glow relative overflow-hidden flex flex-col justify-between h-40">
               <p className="text-sm font-medium text-white/90 relative z-10">Total Inscrits</p>
               <h2 className="text-4xl font-bold tracking-tight relative z-10">
@@ -311,22 +313,34 @@ export default function AdminPage() {
               <div className="text-[10px] text-white/80 bg-white/10 inline-flex px-2 py-1 rounded w-fit relative z-10 uppercase font-bold tracking-widest">Présences / Inscrits</div>
             </div>
 
-            <div className="bg-white border border-gray-100 rounded-3xl p-6 shadow-sm flex flex-col justify-between h-40">
-              <p className="text-sm font-semibold text-gray-500">Chiffre d'Affaires</p>
-              <h2 className="text-3xl font-bold text-gray-900 tracking-tight">{(stats?.total_amount || 0).toLocaleString()} <span className="text-sm font-normal text-gray-400">FCFA</span></h2>
-              <p className="text-[10px] text-gray-400 font-medium uppercase tracking-wider">Cumul FedaPay</p>
+            <div className="bg-brand-navy rounded-3xl p-6 text-white relative overflow-hidden flex flex-col justify-between h-40 shadow-xl shadow-brand-navy/10">
+              <p className="text-sm font-medium text-white/90 relative z-10">Revenu Total</p>
+              <h2 className="text-3xl font-bold tracking-tight relative z-10">{(stats?.total_amount || 0).toLocaleString()} <span className="text-sm opacity-60">FCFA</span></h2>
+              <div className="text-[10px] text-white/80 bg-white/10 inline-flex px-2 py-1 rounded w-fit relative z-10 uppercase font-bold tracking-widest">Cumul FedaPay</div>
             </div>
 
             <div className="bg-white border border-gray-100 rounded-3xl p-6 shadow-sm flex flex-col justify-between h-40">
-              <p className="text-sm font-semibold text-gray-500">Pack Standard</p>
-              <h2 className="text-3xl font-bold text-gray-900 tracking-tight">{stats?.by_product['Standard'] || 0}</h2>
-              <p className="text-[10px] text-gray-400 font-medium uppercase tracking-wider text-brand-pink font-bold">{((stats?.by_product['Standard'] || 0) * 10000).toLocaleString()} FCFA</p>
+              <p className="text-sm font-medium text-gray-500">Simple</p>
+              <h2 className="text-3xl font-bold text-gray-900">{stats?.by_product['Simple'] || 0}</h2>
+              <div className="text-[10px] text-brand-pink bg-brand-pink/5 inline-flex px-2 py-1 rounded w-fit uppercase font-bold tracking-widest">3 000 FCFA</div>
             </div>
 
             <div className="bg-white border border-gray-100 rounded-3xl p-6 shadow-sm flex flex-col justify-between h-40">
-              <p className="text-sm font-semibold text-gray-500">Pack VIP</p>
-              <h2 className="text-3xl font-bold text-gray-900 tracking-tight">{stats?.by_product['VIP'] || 0}</h2>
-              <p className="text-[10px] text-gray-400 font-medium uppercase tracking-wider text-brand-navy font-bold">{((stats?.by_product['VIP'] || 0) * 50000).toLocaleString()} FCFA</p>
+              <p className="text-sm font-medium text-gray-500">Standard</p>
+              <h2 className="text-3xl font-bold text-gray-900">{stats?.by_product['Standard'] || 0}</h2>
+              <div className="text-[10px] text-brand-pink bg-brand-pink/5 inline-flex px-2 py-1 rounded w-fit uppercase font-bold tracking-widest">5 000 FCFA</div>
+            </div>
+
+            <div className="bg-white border border-gray-100 rounded-3xl p-6 shadow-sm flex flex-col justify-between h-40">
+              <p className="text-sm font-medium text-gray-500">Premium</p>
+              <h2 className="text-3xl font-bold text-gray-900">{stats?.by_product['Premium'] || 0}</h2>
+              <div className="text-[10px] text-brand-navy bg-brand-navy/5 inline-flex px-2 py-1 rounded w-fit uppercase font-bold tracking-widest">25 000 FCFA</div>
+            </div>
+
+            <div className="bg-white border border-gray-100 rounded-3xl p-6 shadow-sm flex flex-col justify-between h-40">
+              <p className="text-sm font-medium text-gray-500">VIP</p>
+              <h2 className="text-3xl font-bold text-gray-900">{stats?.by_product['VIP'] || 0}</h2>
+              <div className="text-[10px] text-brand-navy bg-brand-navy/5 inline-flex px-2 py-1 rounded w-fit uppercase font-bold tracking-widest">50 000 FCFA</div>
             </div>
           </div>
 
