@@ -46,7 +46,6 @@ export const Pricing: React.FC<PricingProps> = ({ onSelectPackage }) => {
     <section id="packages" className="py-20 md:py-32 relative bg-white">
       <div className="container mx-auto px-6">
         <div className="text-center mb-24 space-y-4">
-          <p className="text-brand-pink font-black text-xs uppercase tracking-[0.3em]">Investissement</p>
           <h2 className="text-4xl md:text-6xl font-black tracking-tighter uppercase text-brand-navy">CHOISISSEZ VOTRE <span className="text-gradient">PASS</span></h2>
         </div>
         
@@ -54,7 +53,7 @@ export const Pricing: React.FC<PricingProps> = ({ onSelectPackage }) => {
           {packages.map((pkg) => (
             <div 
               key={pkg.name}
-              className={`glass-card p-10 rounded-[2.5rem] flex flex-col relative reveal delay-${pkg.delay}`}
+              className={`glass-card p-10 rounded-[2.5rem] flex flex-col relative reveal delay-${pkg.delay} border-2 border-brand-navy/15 hover:border-brand-navy/40 transition-all`}
             >
               
               <div className="mb-10">
