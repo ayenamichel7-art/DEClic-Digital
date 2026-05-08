@@ -17,7 +17,7 @@ export async function GET(req: Request) {
 
   // Génération du CSV compatible Excel (UTF-8 avec BOM et séparateur ;)
   const header = ['ID', 'Produit', 'Montant', 'Email', 'Nom', 'Telephone', 'Presence', 'Date'];
-  const rows = (tickets || []).map(t => [
+  const rows = (tickets || []).map((t: any) => [
     t.id,
     t.product,
     t.amount,
