@@ -1,46 +1,75 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
+/* ============================================
+   DEClic Digital — Design System (Light Theme)
+   Couleurs officielles :
+   - Pink  : #FF1B6B
+   - Navy  : #0F172A
+   - Light : #F8FAFC
+   ============================================ */
+
 @theme {
   --color-brand-pink: #FF1B6B;
   --color-brand-navy: #0F172A;
-  --color-brand-dark: #000000;
+  --color-brand-dark: #0F172A;
+  --color-brand-light: #F8FAFC;
+  --color-brand-gray: #64748B;
 }
 
 /* Base resets */
 body {
-    background-color: #000000;
-    color: white;
+    background-color: #F8FAFC;
+    color: #0F172A;
+    font-family: var(--font-inter), 'Inter', system-ui, sans-serif;
 }
 
-/* Premium Gradients (Now using only Pink and Navy) */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-outfit), 'Outfit', system-ui, sans-serif;
+}
+
+/* Premium Gradient — Pink to Navy */
 .text-gradient {
-    background: linear-gradient(to right, #FF1B6B, #3B82F6); /* Keeping a touch of blue for depth, or purely pink? */
-    /* Wait, the user said ONLY two colors. So I'll use Pink and Navy. */
-    background: linear-gradient(to right, #FF1B6B, #6366F1); /* Indigo/Navy blend */
+    background: linear-gradient(135deg, #FF1B6B, #7C3AED);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
+/* Light Mesh Background */
 .bg-mesh {
-    background-color: #000000;
+    background-color: #F8FAFC;
     background-image: 
-        radial-gradient(at 0% 0%, rgba(255, 27, 107, 0.15) 0px, transparent 50%),
-        radial-gradient(at 100% 0%, rgba(15, 23, 42, 0.1) 0px, transparent 50%);
+        radial-gradient(at 0% 0%, rgba(255, 27, 107, 0.06) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(15, 23, 42, 0.04) 0px, transparent 50%),
+        radial-gradient(at 50% 100%, rgba(124, 58, 237, 0.04) 0px, transparent 50%);
 }
 
-/* Glassmorphism */
+/* Light Glassmorphism */
 .glass-premium {
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.04);
 }
 
 .glass-card {
-    background: rgba(15, 23, 42, 0.4);
+    background: white;
     backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(15, 23, 42, 0.06);
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.08);
+    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.glass-card:hover {
+    box-shadow: 0 20px 60px -15px rgba(255, 27, 107, 0.12);
+    border-color: rgba(255, 27, 107, 0.15);
+    transform: translateY(-4px);
+}
+
+/* Dark section (Footer) */
+.section-dark {
+    background-color: #0F172A;
+    color: white;
 }
 
 /* Advanced Animations */
@@ -54,6 +83,7 @@ body {
     animation: float 4s ease-in-out infinite;
 }
 
+/* Reveal animation (activée par IntersectionObserver) */
 .reveal {
     opacity: 0;
     transform: translateY(40px);
@@ -69,3 +99,8 @@ body {
 .delay-200 { transition-delay: 0.2s; }
 .delay-300 { transition-delay: 0.3s; }
 .delay-400 { transition-delay: 0.4s; }
+
+/* Pink glow for cards */
+.pink-glow {
+    box-shadow: 0 10px 40px -10px rgba(255, 27, 107, 0.3);
+}

@@ -5,15 +5,45 @@ const FEDAPAY_URL = process.env.NODE_ENV === 'production'
   ? 'https://api.fedapay.com/v1' 
   : 'https://sandbox-api.fedapay.com/v1';
 
+// Source de vérité côté serveur — ne JAMAIS faire confiance au prix client
+const PRODUCT_PRICES: Record<string, number> = {
+  'Simple': 3000,
+  'Standard': 5000,
+  'Premium': 25000,
+  'VIP': 50000,
+};
+
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 export async function POST(req: Request) {
   try {
-    const { name, email, phone, product, amount } = await req.json();
+    const { name, email, phone, product } = await req.json();
+
+    // --- Validation des champs ---
+    if (!name || typeof name !== 'string' || name.trim().length < 2) {
+      return NextResponse.json({ error: 'Nom invalide (minimum 2 caractères)' }, { status: 400 });
+    }
+
+    if (!email || typeof email !== 'string' || !EMAIL_REGEX.test(email)) {
+      return NextResponse.json({ error: 'Adresse email invalide' }, { status: 400 });
+    }
+
+    if (!phone || typeof phone !== 'string' || phone.trim().length < 8) {
+      return NextResponse.json({ error: 'Numéro de téléphone invalide' }, { status: 400 });
+    }
+
+    // --- Validation du produit et prix côté serveur ---
+    if (!product || !(product in PRODUCT_PRICES)) {
+      return NextResponse.json({ error: `Produit invalide : "${product}"` }, { status: 400 });
+    }
+
+    const amount = PRODUCT_PRICES[product];
 
     if (!FEDAPAY_SECRET) {
       return NextResponse.json({ error: 'FedaPay secret not configured' }, { status: 500 });
     }
 
-    // 1. Create Transaction
+    // 1. Create Transaction (avec le prix serveur, pas le prix client)
     const response = await fetch(`${FEDAPAY_URL}/transactions`, {
       method: 'POST',
       headers: {
@@ -25,17 +55,17 @@ export async function POST(req: Request) {
         currency: { iso: 'XOF' },
         description: `Pass ${product} - DEClic Digital`,
         customer: {
-          firstname: name,
-          email: email,
+          firstname: name.trim(),
+          email: email.trim().toLowerCase(),
           phone_number: {
-            number: phone,
-            country: 'bj' // Default to Benin
+            number: phone.trim(),
+            country: 'bj'
           }
         },
         metadata: {
           product: product,
-          name: name,
-          phone: phone
+          name: name.trim(),
+          phone: phone.trim()
         }
       }),
     });

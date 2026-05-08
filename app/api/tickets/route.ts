@@ -1,27 +1,10 @@
 import { NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
+import { requireAdminAuth } from '@/lib/auth';
 
 export async function GET(req: Request) {
-  const authHeader = req.headers.get('authorization');
-  const adminUser = process.env.ADMIN_USER || 'admin';
-  const adminPass = process.env.ADMIN_PASS || 'password';
-
-  if (!authHeader || !authHeader.startsWith('Basic ')) {
-    return new NextResponse('Access denied', {
-      status: 401,
-      headers: { 'WWW-Authenticate': 'Basic realm="Admin Area"' }
-    });
-  }
-
-  const base64Credentials = authHeader.split(' ')[1];
-  const [user, pass] = Buffer.from(base64Credentials, 'base64').toString('utf-8').split(':');
-
-  if (user !== adminUser || pass !== adminPass) {
-    return new NextResponse('Access denied', {
-      status: 401,
-      headers: { 'WWW-Authenticate': 'Basic realm="Admin Area"' }
-    });
-  }
+  const authError = requireAdminAuth(req);
+  if (authError) return authError;
 
   const { data: tickets, error } = await supabase
     .from('tickets')

@@ -1,11 +1,31 @@
-import { createClient } from '@supabase/supabase-js';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL || 'https://dummy.supabase.co';
-// Use service role key for backend operations (bypassing RLS)
-const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || 'dummy_key';
+let _supabase: SupabaseClient | null = null;
 
-if (!process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NODE_ENV !== 'production') {
-  console.warn('⚠️ SUPABASE_URL ou SUPABASE_SERVICE_ROLE_KEY manquant dans les variables d\'environnement');
+/**
+ * Client Supabase pour les opérations backend (service_role, bypass RLS).
+ * Initialisation lazy pour éviter les erreurs au build.
+ */
+export function getSupabase(): SupabaseClient {
+  if (_supabase) return _supabase;
+
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+  if (!supabaseUrl || !supabaseKey) {
+    throw new Error(
+      '❌ Variables Supabase manquantes : NEXT_PUBLIC_SUPABASE_URL et SUPABASE_SERVICE_ROLE_KEY doivent être définis dans .env.local'
+    );
+  }
+
+  _supabase = createClient(supabaseUrl, supabaseKey);
+  return _supabase;
 }
 
-export const supabase = createClient(supabaseUrl, supabaseKey);
+// Raccourci pour compatibilité avec le code existant
+export const supabase = new Proxy({} as SupabaseClient, {
+  get(_target, prop) {
+    return (getSupabase() as any)[prop];
+  },
+});
+

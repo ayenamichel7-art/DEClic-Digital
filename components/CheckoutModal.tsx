@@ -4,7 +4,7 @@ interface CheckoutModalProps {
   isOpen: boolean;
   onClose: () => void;
   selectedPackage: { name: string; price: number } | null;
-  onSubmit: (formData: any) => void;
+  onSubmit: (formData: { fullName: string; email: string; phone: string }) => void;
 }
 
 export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose, selectedPackage, onSubmit }) => {
@@ -13,12 +13,36 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose, s
     email: '',
     phone: ''
   });
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   if (!isOpen) return null;
 
+  const validate = (): boolean => {
+    const newErrors: Record<string, string> = {};
+
+    if (!formData.fullName.trim() || formData.fullName.trim().length < 2) {
+      newErrors.fullName = 'Le nom doit contenir au moins 2 caractères.';
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formData.email.trim() || !emailRegex.test(formData.email)) {
+      newErrors.email = 'Veuillez entrer une adresse email valide.';
+    }
+
+    const digitsOnly = formData.phone.replace(/\D/g, '');
+    if (digitsOnly.length < 8) {
+      newErrors.phone = 'Le numéro doit contenir au moins 8 chiffres.';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit(formData);
+    if (validate()) {
+      onSubmit(formData);
+    }
   };
 
   return (
@@ -46,12 +70,13 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose, s
                 <input 
                   type="text" 
                   value={formData.fullName}
-                  onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                  onChange={(e) => { setFormData({ ...formData, fullName: e.target.value }); setErrors(prev => ({ ...prev, fullName: '' })); }}
                   placeholder="Ex: Jean Dupont" 
-                  className="w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:bg-white focus:border-brand-pink focus:ring-4 focus:ring-brand-pink/5 outline-none transition-all font-medium text-brand-dark" 
+                  className={`w-full pl-12 pr-4 py-4 bg-gray-50 border rounded-2xl focus:bg-white focus:border-brand-pink focus:ring-4 focus:ring-brand-pink/5 outline-none transition-all font-medium text-brand-dark ${errors.fullName ? 'border-red-400' : 'border-gray-100'}`}
                   required 
                 />
               </div>
+              {errors.fullName && <p className="text-red-500 text-xs font-medium ml-1">{errors.fullName}</p>}
             </div>
 
             <div className="space-y-2">
@@ -63,12 +88,13 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose, s
                 <input 
                   type="email" 
                   value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  onChange={(e) => { setFormData({ ...formData, email: e.target.value }); setErrors(prev => ({ ...prev, email: '' })); }}
                   placeholder="votre@email.com" 
-                  className="w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:bg-white focus:border-brand-pink focus:ring-4 focus:ring-brand-pink/5 outline-none transition-all font-medium text-brand-dark" 
+                  className={`w-full pl-12 pr-4 py-4 bg-gray-50 border rounded-2xl focus:bg-white focus:border-brand-pink focus:ring-4 focus:ring-brand-pink/5 outline-none transition-all font-medium text-brand-dark ${errors.email ? 'border-red-400' : 'border-gray-100'}`}
                   required 
                 />
               </div>
+              {errors.email && <p className="text-red-500 text-xs font-medium ml-1">{errors.email}</p>}
             </div>
 
             <div className="space-y-2">
@@ -80,12 +106,13 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose, s
                 <input 
                   type="tel" 
                   value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  onChange={(e) => { setFormData({ ...formData, phone: e.target.value }); setErrors(prev => ({ ...prev, phone: '' })); }}
                   placeholder="+229 01 00 00 00" 
-                  className="w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:bg-white focus:border-brand-pink focus:ring-4 focus:ring-brand-pink/5 outline-none transition-all font-medium text-brand-dark" 
+                  className={`w-full pl-12 pr-4 py-4 bg-gray-50 border rounded-2xl focus:bg-white focus:border-brand-pink focus:ring-4 focus:ring-brand-pink/5 outline-none transition-all font-medium text-brand-dark ${errors.phone ? 'border-red-400' : 'border-gray-100'}`}
                   required 
                 />
               </div>
+              {errors.phone && <p className="text-red-500 text-xs font-medium ml-1">{errors.phone}</p>}
             </div>
 
             <div className="pt-4">

@@ -64,7 +64,7 @@ export default function AdminPage() {
         {/* Sidebar */}
         <aside className="w-64 border-r border-gray-100 flex flex-col py-8 px-6 flex-shrink-0 bg-white z-10 hidden lg:flex">
           <div className="flex items-center gap-3 mb-10">
-            <img src="logo.png?v=1.1" alt="Logo" className="h-8 w-8 object-contain" />
+            <img src="/logo.png" alt="Logo" className="h-8 w-8 object-contain" />
             <span className="text-xl font-bold tracking-tight text-gray-900">DEClic Digital</span>
           </div>
           

@@ -9,7 +9,6 @@ interface TicketData {
   name: string;
   product: string;
   amount: number;
-  email: string;
 }
 
 function ThankYouContent() {
@@ -80,7 +79,7 @@ function ThankYouContent() {
               <div className="bg-gray-50 rounded-3xl p-8 border border-gray-100 mb-10 text-center">
                 <div className="flex flex-col items-center">
                   <img 
-                    src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${ticket.id}`} 
+                    src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(ticket.id)}`} 
                     alt="Ticket QR Code"
                     className="mb-6 rounded-xl shadow-lg bg-white p-4 w-48 h-48"
                   />
@@ -94,7 +93,7 @@ function ThankYouContent() {
               <div className="space-y-4">
                 <div className="flex items-center gap-4 p-4 rounded-2xl bg-blue-50 text-blue-700 text-sm">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                  <p>Un email de confirmation contenant votre ticket a été envoyé à <strong>{ticket.email}</strong>.</p>
+                  <p>Un email de confirmation contenant votre ticket a été envoyé à l'adresse fournie lors de l'inscription.</p>
                 </div>
                 <Link href="/" className="w-full py-4 bg-brand-pink text-white font-bold rounded-2xl shadow-lg block text-center uppercase tracking-widest text-xs hover:scale-[1.02] transition-transform">
                   Retour à l'accueil

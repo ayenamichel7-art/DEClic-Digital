@@ -32,15 +32,15 @@ export async function sendConfirmation(to: string, ticketId: string, product: st
     to: to,
     subject: `🎟️ Confirmation de votre ticket - ${product}`,
     html: `
-      <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #0D1117; max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 12px; overflow: hidden;">
-        <div style="background-color: #0D1117; padding: 30px; text-align: center;">
-          <h1 style="color: #E91E63; margin: 0; font-size: 24px;">DEClic Digital 2026</h1>
+      <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #0F172A; max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 12px; overflow: hidden;">
+        <div style="background-color: #0F172A; padding: 30px; text-align: center;">
+          <h1 style="color: #FF1B6B; margin: 0; font-size: 24px;">DEClic Digital 2026</h1>
         </div>
         <div style="padding: 30px;">
-          <h2 style="color: #0D1117;">Merci pour votre inscription !</h2>
+          <h2 style="color: #0F172A;">Merci pour votre inscription !</h2>
           <p>Votre paiement pour la conférence <strong>DEClic Digital</strong> a été confirmé avec succès.</p>
-          <div style="background: #F8F9FA; padding: 20px; border-radius: 12px; border: 1px solid #E91E63; margin: 20px 0;">
-            <p style="margin: 5px 0;"><strong>ID du Ticket :</strong> <span style="color: #E91E63;">${escapeHtml(ticketId)}</span></p>
+          <div style="background: #F8F9FA; padding: 20px; border-radius: 12px; border: 1px solid #FF1B6B; margin: 20px 0;">
+            <p style="margin: 5px 0;"><strong>ID du Ticket :</strong> <span style="color: #FF1B6B;">${escapeHtml(ticketId)}</span></p>
             <p style="margin: 5px 0;"><strong>Pack :</strong> ${escapeHtml(product)}</p>
             <p style="margin: 5px 0;"><strong>Montant :</strong> ${Number(amount).toLocaleString('fr-FR')} FCFA</p>
           </div>
