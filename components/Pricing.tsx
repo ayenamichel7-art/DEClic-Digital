@@ -53,7 +53,7 @@ export const Pricing: React.FC<PricingProps> = ({ onSelectPackage }) => {
           {packages.map((pkg) => (
             <div 
               key={pkg.name}
-              className={`glass-card p-10 rounded-[2.5rem] flex flex-col relative reveal delay-${pkg.delay} border-2 border-brand-navy/15 hover:border-brand-navy/40 transition-all`}
+              className={`glass-card p-10 rounded-[2.5rem] flex flex-col relative reveal delay-${pkg.delay} border-2 border-brand-navy/30 hover:border-brand-navy transition-all shadow-sm hover:shadow-xl`}
             >
               
               <div className="mb-10">
