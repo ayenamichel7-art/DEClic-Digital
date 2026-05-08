@@ -27,7 +27,7 @@ export async function sendConfirmation(to: string, ticketId: string, product: st
   const from = process.env.EMAIL_FROM || 'DEClic Digital <onboarding@resend.dev>';
   
   try {
-    const data = await resend.emails.send({
+    const { data, error } = await resend.emails.send({
       from: from,
       to: [to],
       subject: `🎟️ Confirmation de votre ticket - ${product}`,
@@ -57,7 +57,11 @@ export async function sendConfirmation(to: string, ticketId: string, product: st
       `,
     });
 
-    console.log('📧 Email envoyé via Resend :', data.id);
+    if (error) {
+      throw error;
+    }
+
+    console.log('📧 Email envoyé via Resend :', data?.id);
     return data;
   } catch (error) {
     console.error('❌ Erreur envoi email (Resend) :', error);
