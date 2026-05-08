@@ -17,14 +17,14 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "DEClic Digital 2026 — Cotonou, Bénin",
+  title: "DEClic Digital 2026 — L'événement Numérique au Bénin",
   description:
-    "L'événement de référence pour apprendre à vendre efficacement sur Internet. Rejoignez +500 participants le 20 juin 2026 à Cotonou.",
+    "Apprenez à vendre efficacement sur Internet. Rejoignez +500 participants le 20 juin 2026 à Cotonou pour l'événement numérique de l'année.",
   openGraph: {
-    title: "DEClic Digital 2026 — Cotonou, Bénin",
+    title: "DEClic Digital 2026 — Inscrivez-vous maintenant !",
     description:
-      "L'événement de référence pour propulser votre entreprise sur Internet. Stratégies concrètes, networking, mentorat.",
-    images: ["/hero.png"],
+      "Propulsez votre business avec les meilleures stratégies de vente en ligne. Networking, mentorat et opportunités uniques.",
+    images: ["/og-image.png"],
     type: "website",
     locale: "fr_FR",
     siteName: "DEClic Digital",
@@ -33,8 +33,8 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "DEClic Digital 2026",
     description:
-      "Apprenez les stratégies qui génèrent des résultats concrets et rejoignez l'élite du commerce en ligne.",
-    images: ["/hero.png"],
+      "L'élite du commerce en ligne se réunit à Cotonou. Ne manquez pas votre chance !",
+    images: ["/og-image.png"],
   },
   icons: {
     icon: "/favicon.ico",
