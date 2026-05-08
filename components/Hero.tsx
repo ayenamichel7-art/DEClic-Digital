@@ -28,8 +28,8 @@ export const Hero = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-6 justify-center lg:justify-start pt-6">
-              <a href="#packages" className="px-12 py-5 bg-brand-pink text-white font-black rounded-full shadow-lg shadow-brand-pink/30 hover:shadow-brand-pink/50 hover:scale-105 transition-all uppercase tracking-widest text-sm">Prendre mon Pass</a>
-              <a href="#vision" className="px-12 py-5 bg-white border-2 border-brand-navy/10 text-brand-navy font-bold rounded-full hover:border-brand-pink hover:text-brand-pink transition-all uppercase tracking-widest text-sm shadow-sm">Voir la vision</a>
+              <a href="#packages" className="px-8 sm:px-12 py-5 bg-brand-pink text-white font-black rounded-full shadow-lg shadow-brand-pink/30 hover:shadow-brand-pink/50 hover:scale-105 transition-all uppercase tracking-widest text-sm">Prendre mon Pass</a>
+              <a href="#vision" className="px-8 sm:px-12 py-5 bg-white border-2 border-brand-navy/10 text-brand-navy font-bold rounded-full hover:border-brand-pink hover:text-brand-pink transition-all uppercase tracking-widest text-sm shadow-sm">Voir la vision</a>
             </div>
           </div>
 
@@ -39,7 +39,7 @@ export const Hero = () => {
               <div className="absolute inset-0 bg-gradient-to-t from-white/40 to-transparent opacity-60"></div>
             </div>
             {/* Experience Card */}
-            <div className="absolute -bottom-10 -left-10 glass-card p-8 rounded-3xl z-20 animate-float">
+            <div className="absolute -bottom-10 -left-10 glass-card p-8 rounded-3xl z-20 animate-float hidden sm:block">
               <p className="text-4xl font-black text-gradient">+500</p>
               <p className="text-[10px] font-bold text-brand-gray uppercase tracking-widest mt-1">Participants Attendus</p>
             </div>

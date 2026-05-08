@@ -43,7 +43,7 @@ export const Pricing: React.FC<PricingProps> = ({ onSelectPackage }) => {
   ];
 
   return (
-    <section id="packages" className="py-32 relative bg-white">
+    <section id="packages" className="py-20 md:py-32 relative bg-white">
       <div className="container mx-auto px-6">
         <div className="text-center mb-24 space-y-4">
           <p className="text-brand-pink font-black text-xs uppercase tracking-[0.3em]">Investissement</p>
