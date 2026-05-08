@@ -13,7 +13,7 @@ const PRODUCT_PRICES: Record<string, number> = {
   'VIP': 50000,
 };
 
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 export async function POST(req: Request) {
   try {
