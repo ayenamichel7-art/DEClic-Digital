@@ -23,6 +23,7 @@ export const Navbar = () => {
         <div className="hidden lg:flex items-center gap-8 font-bold uppercase text-xs tracking-widest text-brand-navy/60">
           <a href="#vision" className="hover:text-brand-pink transition-colors">La Vision</a>
           <a href="#packages" className="hover:text-brand-pink transition-colors">Tarifs</a>
+          <Link href="/admin" className="hover:text-brand-navy transition-colors">Connexion</Link>
           <a href="#packages" className="px-6 py-3 bg-brand-pink text-white rounded-full hover:bg-brand-navy transition-all shadow-md uppercase text-xs font-black tracking-widest">Prendre mon Pass</a>
         </div>
 
@@ -57,6 +58,7 @@ export const Navbar = () => {
         <div className="flex flex-col gap-4 font-bold uppercase text-sm tracking-widest">
           <a href="#vision" onClick={closeMobile} className="text-brand-navy/60 hover:text-brand-pink transition-colors py-3 border-b border-brand-navy/5">La Vision</a>
           <a href="#packages" onClick={closeMobile} className="text-brand-navy/60 hover:text-brand-pink transition-colors py-3 border-b border-brand-navy/5">Tarifs</a>
+          <Link href="/admin" onClick={closeMobile} className="text-brand-navy/60 hover:text-brand-pink transition-colors py-3 border-b border-brand-navy/5">Connexion</Link>
           <a href="#packages" onClick={closeMobile} className="mt-2 py-4 bg-brand-pink text-white text-center rounded-2xl shadow-lg shadow-brand-pink/20 hover:scale-[1.02] transition-transform text-xs tracking-widest font-black uppercase">
             Prendre mon Pass
           </a>
