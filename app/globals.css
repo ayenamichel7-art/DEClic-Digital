@@ -28,11 +28,9 @@ h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-outfit), 'Outfit', system-ui, sans-serif;
 }
 
-/* Premium Gradient — Pink to Navy */
+/* Solid Brand Color for emphasis (Replaces Gradient) */
 .text-gradient {
-    background: linear-gradient(135deg, #FF1B6B, #7C3AED);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: #FF1B6B;
 }
 
 /* Light Mesh Background */
