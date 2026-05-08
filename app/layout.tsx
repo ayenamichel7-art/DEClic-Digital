@@ -17,6 +17,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://de-clic-digital.vercel.app'),
   title: "DEClic Digital 2026 — L'événement Numérique au Bénin",
   description:
     "Apprenez à vendre efficacement sur Internet. Rejoignez +500 participants le 20 juin 2026 à Cotonou pour l'événement numérique de l'année.",
