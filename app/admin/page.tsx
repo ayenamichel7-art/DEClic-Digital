@@ -196,8 +196,10 @@ export default function AdminPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             <div className="bg-brand-pink rounded-3xl p-6 text-white pink-glow relative overflow-hidden flex flex-col justify-between h-40">
               <p className="text-sm font-medium text-white/90 relative z-10">Total Inscrits</p>
-              <h2 className="text-4xl font-bold tracking-tight relative z-10">{stats?.total_count || 0}</h2>
-              <div className="text-[10px] text-white/80 bg-white/10 inline-flex px-2 py-1 rounded w-fit relative z-10 uppercase font-bold tracking-widest">Confirmés</div>
+              <h2 className="text-4xl font-bold tracking-tight relative z-10">
+                {stats?.total_checked_in || 0} <span className="text-xl opacity-60 font-medium">/ {stats?.total_count || 0}</span>
+              </h2>
+              <div className="text-[10px] text-white/80 bg-white/10 inline-flex px-2 py-1 rounded w-fit relative z-10 uppercase font-bold tracking-widest">Présences / Inscrits</div>
             </div>
 
             <div className="bg-white border border-gray-100 rounded-3xl p-6 shadow-sm flex flex-col justify-between h-40">
