@@ -1,6 +1,6 @@
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 
 function escapeHtml(unsafe: string) {
   return unsafe
@@ -19,7 +19,7 @@ function escapeHtml(unsafe: string) {
  * @param amount Montant payé
  */
 export async function sendConfirmation(to: string, ticketId: string, product: string, amount: number) {
-  if (!process.env.RESEND_API_KEY) {
+  if (!process.env.RESEND_API_KEY || !resend) {
     console.error('❌ Erreur : RESEND_API_KEY n\'est pas configurée dans les variables d\'environnement.');
     return;
   }

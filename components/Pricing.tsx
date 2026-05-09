@@ -7,21 +7,12 @@ interface PricingProps {
 export const Pricing: React.FC<PricingProps> = ({ onSelectPackage }) => {
   const packages = [
     {
-      name: 'Simple',
-      price: 3000,
-      label: 'Entrée',
-      features: ['Accès Salle', 'Formation Live'],
-      color: 'brand-pink',
-      delay: '100'
-    },
-    {
       name: 'Standard',
       price: 5000,
       label: 'Croissance',
       features: ['Pass + Consultations', '4 contenus Formation', 'Wi‑Fi VIP'],
       color: 'brand-pink',
-      recommended: true,
-      delay: '200'
+      delay: '100'
     },
     {
       name: 'Premium',
@@ -29,7 +20,7 @@ export const Pricing: React.FC<PricingProps> = ({ onSelectPackage }) => {
       label: 'Expert',
       features: ['Tout du Standard', '8 contenus supp.', 'Mentorat privé'],
       color: 'brand-navy',
-      delay: '300'
+      delay: '200'
     },
     {
       name: 'VIP',
@@ -37,7 +28,15 @@ export const Pricing: React.FC<PricingProps> = ({ onSelectPackage }) => {
       label: 'Elite',
       features: ['Tout du Premium', '18 contenus Bonus', 'Dîner Networking'],
       color: 'brand-navy',
-      prestige: true,
+      delay: '300'
+    },
+    {
+      name: 'Ultime',
+      price: 350000,
+      label: 'Masterclass',
+      features: ['Formation DIGITALE:03 Mois', 'Idée produit', 'Campagne publicitaire'],
+      color: 'brand-pink',
+      popular: true,
       delay: '400'
     }
   ];
@@ -53,22 +52,27 @@ export const Pricing: React.FC<PricingProps> = ({ onSelectPackage }) => {
           {packages.map((pkg) => (
             <div 
               key={pkg.name}
-              className={`glass-card p-10 rounded-[2.5rem] flex flex-col relative reveal delay-${pkg.delay} border-2 border-brand-navy/30 hover:border-brand-navy transition-all shadow-sm hover:shadow-xl`}
+              className={`glass-card p-10 rounded-[2.5rem] flex flex-col relative reveal delay-${pkg.delay} border-2 transition-all shadow-sm ${pkg.popular ? 'border-brand-pink shadow-brand-pink/30 shadow-2xl bg-brand-navy transform md:-translate-y-4' : 'border-brand-navy/30 hover:border-brand-navy hover:shadow-xl'}`}
             >
+              {pkg.popular && (
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-brand-pink text-white text-xs font-black px-4 py-1.5 rounded-full tracking-widest uppercase shadow-lg shadow-brand-pink/30">
+                  Populaire
+                </div>
+              )}
               
               <div className="mb-10">
-                <p className="text-brand-pink font-bold text-[10px] uppercase tracking-widest mb-2">{pkg.label}</p>
-                <h4 className="text-2xl font-black uppercase text-brand-navy">Pack {pkg.name}</h4>
+                <p className={`font-bold text-[10px] uppercase tracking-widest mb-2 ${pkg.popular ? 'text-brand-pink' : 'text-brand-pink'}`}>{pkg.label}</p>
+                <h4 className={`text-2xl font-black uppercase ${pkg.popular ? 'text-white' : 'text-brand-navy'}`}>Pack {pkg.name}</h4>
               </div>
               
-              <div className="flex items-baseline gap-2 mb-10">
-                <span className="text-5xl font-black text-brand-navy">{pkg.price.toLocaleString('fr-FR')}</span>
-                <span className="text-xs font-bold uppercase text-brand-gray">FCFA</span>
+              <div className={`flex items-baseline gap-2 mb-10 ${pkg.popular ? 'text-white' : 'text-brand-navy'}`}>
+                <span className="text-5xl font-black">{pkg.price.toLocaleString('fr-FR')}</span>
+                <span className={`text-xs font-bold uppercase ${pkg.popular ? 'text-white/70' : 'text-brand-gray'}`}>FCFA</span>
               </div>
               
               <ul className="space-y-6 mb-12 flex-grow">
                 {pkg.features.map((feature, i) => (
-                  <li key={i} className="flex items-center gap-4 text-sm font-medium text-brand-navy/70">
+                  <li key={i} className={`flex items-center gap-4 text-sm font-medium ${pkg.popular ? 'text-white/80' : 'text-brand-navy/70'}`}>
                     <div className="w-2 h-2 rounded-full bg-brand-pink shadow-[0_0_10px_#FF1B6B]"></div>
                     {feature}
                   </li>
@@ -77,7 +81,7 @@ export const Pricing: React.FC<PricingProps> = ({ onSelectPackage }) => {
               
               <button 
                 onClick={() => onSelectPackage(pkg.name, pkg.price)} 
-                className="w-full py-4 rounded-2xl font-black uppercase tracking-widest text-xs transition-all cursor-pointer bg-brand-navy/5 border border-brand-navy/10 text-brand-navy hover:bg-brand-pink hover:text-white hover:border-brand-pink hover:shadow-lg hover:shadow-brand-pink/20"
+                className={`w-full py-4 rounded-2xl font-black uppercase tracking-widest text-xs transition-all cursor-pointer border ${pkg.popular ? 'bg-brand-pink border-brand-pink text-white hover:bg-white hover:text-brand-pink hover:shadow-lg hover:shadow-white/20' : 'bg-brand-navy/5 border-brand-navy/10 text-brand-navy hover:bg-brand-pink hover:text-white hover:border-brand-pink hover:shadow-lg hover:shadow-brand-pink/20'}`}
               >
                 Choisir
               </button>

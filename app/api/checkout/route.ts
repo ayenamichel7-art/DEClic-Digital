@@ -7,10 +7,10 @@ const FEDAPAY_URL = process.env.NODE_ENV === 'production'
 
 // Source de vérité côté serveur — ne JAMAIS faire confiance au prix client
 const PRODUCT_PRICES: Record<string, number> = {
-  'Simple': 3000,
   'Standard': 5000,
   'Premium': 25000,
   'VIP': 50000,
+  'Ultime': 350000,
 };
 
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;

@@ -280,7 +280,7 @@ export default function AdminPage() {
                 className="px-5 py-2.5 bg-white border border-gray-200 text-gray-700 rounded-full text-sm font-semibold outline-none focus:ring-2 focus:ring-brand-pink/20 shadow-sm"
               >
                 <option value="All">Tous les packs</option>
-                <option value="Simple">Pack Simple</option>
+                <option value="Ultime">Pack Ultime</option>
                 <option value="Standard">Pack Standard</option>
                 <option value="Premium">Pack Premium</option>
                 <option value="VIP">Pack VIP</option>
@@ -320,9 +320,9 @@ export default function AdminPage() {
             </div>
 
             <div className="bg-white border border-gray-100 rounded-3xl p-6 shadow-sm flex flex-col justify-between h-40">
-              <p className="text-sm font-medium text-gray-500">Simple</p>
-              <h2 className="text-3xl font-bold text-gray-900">{stats?.by_product['Simple'] || 0}</h2>
-              <div className="text-[10px] text-brand-pink bg-brand-pink/5 inline-flex px-2 py-1 rounded w-fit uppercase font-bold tracking-widest">3 000 FCFA</div>
+              <p className="text-sm font-medium text-gray-500">Ultime</p>
+              <h2 className="text-3xl font-bold text-gray-900">{stats?.by_product['Ultime'] || 0}</h2>
+              <div className="text-[10px] text-brand-pink bg-brand-pink/5 inline-flex px-2 py-1 rounded w-fit uppercase font-bold tracking-widest">350 000 FCFA</div>
             </div>
 
             <div className="bg-white border border-gray-100 rounded-3xl p-6 shadow-sm flex flex-col justify-between h-40">
